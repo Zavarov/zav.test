@@ -9,7 +9,7 @@ on:
     types: [created]
 
 env:
-  MAVEN_FLAGS: -ntb -B -s settings.xml -f pom.xml -DskipTests
+  MAVEN_FLAGS: -B -s settings.xml -f pom.xml -DskipTests
 
 jobs:
   build:

@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 env:
-  MAVEN_FLAGS: -ntb -B -s settings.xml
+  MAVEN_FLAGS: -B -s settings.xml
 
 jobs:
   build:
