@@ -26,5 +26,5 @@ jobs:
       - name: Build with Maven
         env:
           GITHUB_ACCOUNT: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_T
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn clean deploy ${{ env.MAVEN_FLAGS }}
