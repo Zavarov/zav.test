@@ -8,6 +8,12 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <parent>
+        <groupId>zav.parent</groupId>
+        <artifactId>project</artifactId>
+        <version>2.0.0</version>
+    </parent>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -17,5 +23,87 @@
     <modules>
         <module>zav.test.io</module>
     </modules>
+
+    <!-- == GitHub Repositories =========================================== -->
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Zavarov Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/zavarov/zav.test</url>
+        </repository>
+    </distributionManagement>
+
+    <!-- == DEFAULT BUILD SETTINGS ======================================== -->
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <!-- Licenses -->
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <configuration>
+                        <instructions>
+                            <Include-Resource>${project.build.directory}/generated-metadata</Include-Resource>
+                        </instructions>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>copy-licenses</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.basedir}/..</directory>
+                                        <includes>
+                                            <include>LICENSE</include>
+                                        </includes>
+                                    </resource>
+                                    <resource>
+                                        <directory>${project.build.directory}/generated-resources</directory>
+                                    </resource>
+                                </resources>
+                                <outputDirectory>${project.build.directory}/generated-metadata/META-INF</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>download-licenses</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>download-licenses</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <cleanLicensesOutputDirectory>true</cleanLicensesOutputDirectory>
+                        <licensesConfigFile>${project.basedir}/../license.xml</licensesConfigFile>
+                        <includedScopes>compile</includedScopes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
     
 </project>
